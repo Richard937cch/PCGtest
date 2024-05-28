@@ -519,7 +519,7 @@ GameObject:
   - component: {fileID: 657758498}
   - component: {fileID: 657758496}
   - component: {fileID: 657758499}
-  - component: {fileID: 657758497}
+  - component: {fileID: 657758500}
   m_Layer: 0
   m_Name: Generator
   m_TagString: Untagged
@@ -584,22 +584,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &657758497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 657758493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 429663a3b2c817140a821b9eecc75762, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xSize: 20
-  zSize: 20
-  spawnpoint: {x: 0, y: 10, z: 0}
-  Player: {fileID: 7719329319191139608, guid: 50c531db60bf3494085d02a49efe3c75, type: 3}
 --- !u!33 &657758498
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -630,6 +614,25 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &657758500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657758493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3ab44739c0b30144a0f25eb803de7c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 7719329319191139608, guid: 50c531db60bf3494085d02a49efe3c75, type: 3}
+  Seed: 12345
+  width: 100
+  height: 100
+  depth: 2
+  hallway: {fileID: 1189511133551024065, guid: 3ed5bdfe2ca61e04bafb997e3fd7fbaf, type: 3}
+  branchCount: 10
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,8 +1039,8 @@ Transform:
   m_GameObject: {fileID: 1270162379}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalPosition: {x: 50, y: 0, z: 50}
+  m_LocalScale: {x: 12, y: 12, z: 12}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
