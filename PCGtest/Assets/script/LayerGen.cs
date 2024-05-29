@@ -22,6 +22,10 @@ public class LayerGen : MonoBehaviour
 
     public GameObject hallway;
 
+    public GameObject roomTile;
+
+    public GameObject token;
+
     public int branchCount =2;
 
 
@@ -63,6 +67,7 @@ public class LayerGen : MonoBehaviour
         
          while (gridQueue.Count > 0 && branchCount > 0)
          {
+            print(gridQueue.Count);
             Vector3 nextPos = gridQueue.Dequeue();
              switch (Grid[nextPos])
              {
@@ -91,8 +96,30 @@ public class LayerGen : MonoBehaviour
              }
          }
 
+        List<Vector3> cellsWithValue5 = Grid.FindCellsWithValue(5);
+        List<Vector3> randomCells = Grid.PickRandomCells(cellsWithValue5, 3);
+        foreach (Vector3 cell in randomCells)
+        {
+            for (int i=1;i<5;i++)
+            {
+                for (int j=1;j<5;j++)
+                {
+                    if (Grid[new Vector3(cell.x-i,cell.y,cell.z-j)]==0)
+                    {
+                        Grid[new Vector3(cell.x-i,cell.y,cell.z-j)]=7;
+                    }
+                }
+            }
+            //Grid[cell] = 7;
+        }
 
-
+        List<Vector3> cellsWithValue8 = Grid.FindCellsWithValue(8);
+        List<Vector3> randomCells8 = Grid.PickRandomCells(cellsWithValue5, 5);
+        foreach (Vector3 cell in randomCells)
+        {
+            
+            Grid[cell] = 8;
+        }
     }
 
     void tileGen()
@@ -104,10 +131,20 @@ public class LayerGen : MonoBehaviour
             {
                 for (int y = 0; y < depth; y++)
                 {
-                    if (Grid[x,y,z]!=0)
+                    if (Grid[x,y,z]!=0 && Grid[x,y,z]!=7)
                     {
                         GameObject newhallway = Instantiate(hallway, new Vector3(x, y, z), rotation);
                         newhallway.transform.parent = transform;
+                    }
+                    if (Grid[x,y,z]==7)
+                    {
+                        GameObject newroom = Instantiate(roomTile, new Vector3(x, y, z), rotation);
+                        newroom.transform.parent = transform;
+                    }
+                    if (Grid[x,y,z]==8)
+                    {
+                        GameObject newtoken = Instantiate(token, new Vector3(x, y+0.1f, z), rotation);
+                        newtoken.transform.parent = transform;
                     }
                 }
             }
@@ -181,11 +218,11 @@ public class LayerGen : MonoBehaviour
         }
 
         //left?
-        ll(nextPos);
+        ll(newPos);
         //up?
-        uu(nextPos);
+        uu(newPos);
         //down?
-        dd(nextPos);
+        dd(newPos);
 
         Grid[new Vector3(newPos.x-1,newPos.y,newPos.z-1)] = 6;
         Grid[new Vector3(newPos.x-1,newPos.y,newPos.z+1)] = 6;
@@ -206,11 +243,11 @@ public class LayerGen : MonoBehaviour
         }
 
         //right?
-        rr(nextPos);
+        rr(newPos);
         //up?
-        uu(nextPos);
+        uu(newPos);
         //down?
-        dd(nextPos);
+        dd(newPos);
 
         Grid[new Vector3(newPos.x+1,newPos.y,newPos.z-1)] = 6;
         Grid[new Vector3(newPos.x+1,newPos.y,newPos.z+1)] = 6;
@@ -218,10 +255,11 @@ public class LayerGen : MonoBehaviour
 
     void uu(Vector3 newPos)
     {
-        if (Random.Range(0,2) == 1 && newPos.z+5<=height)
+        if (Random.Range(0,3) > 0 && newPos.z+5<=height)
         {
             setgrid(new Vector3(newPos.x,newPos.y,newPos.z+1),1);
             gridQueue.Enqueue(new Vector3(newPos.x,newPos.y,newPos.z+1));
+            print("u");
         }
         else
         {
@@ -231,10 +269,11 @@ public class LayerGen : MonoBehaviour
 
     void dd(Vector3 newPos)
     {
-        if (Random.Range(0,2) == 1 && newPos.z-5>0)
+        if (Random.Range(0,3) > 0 && newPos.z-5>0)
         {
             setgrid(new Vector3(newPos.x,newPos.y,newPos.z-1),2);
             gridQueue.Enqueue(new Vector3(newPos.x,newPos.y,newPos.z-1));
+            print("d");
         }
         else
         {
@@ -244,10 +283,11 @@ public class LayerGen : MonoBehaviour
 
     void ll(Vector3 newPos)
     {
-        if (Random.Range(0,2) == 1 && newPos.x-5>0)
+        if (Random.Range(0,3) > 0 && newPos.x-5>0)
         {
             setgrid(new Vector3(newPos.x-1,newPos.y,newPos.z),4);
             gridQueue.Enqueue(new Vector3(newPos.x-1,newPos.y,newPos.z));
+            print("l");
         }
         else
         {
@@ -257,10 +297,11 @@ public class LayerGen : MonoBehaviour
 
     void rr(Vector3 newPos)
     {
-        if (Random.Range(0,2) == 1 && newPos.x+5<=width)
+        if (Random.Range(0,3) > 0 && newPos.x+5<=width)
         {
             setgrid(new Vector3(newPos.x+1,newPos.y,newPos.z),3);
             gridQueue.Enqueue(new Vector3(newPos.x+1,newPos.y,newPos.z));
+            print("r");
         }
         else
         {

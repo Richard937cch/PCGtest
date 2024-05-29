@@ -1,3 +1,5 @@
+//using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Grid3D
@@ -23,14 +25,25 @@ public class Grid3D
             int x = Mathf.FloorToInt(index.x);
             int y = Mathf.FloorToInt(index.y);
             int z = Mathf.FloorToInt(index.z);
-            return grid[x, y, z];
+            if (x >= 0 && x < Width && y >= 0 && y < Height && z >= 0 && z < Depth)
+            {
+                return grid[x, y, z];
+            }
+            throw new System.IndexOutOfRangeException("Index was outside the bounds of the array.");
         }
         set
         {
             int x = Mathf.FloorToInt(index.x);
             int y = Mathf.FloorToInt(index.y);
             int z = Mathf.FloorToInt(index.z);
-            grid[x, y, z] = value;
+            if (x >= 0 && x < Width && y >= 0 && y < Height && z >= 0 && z < Depth)
+            {
+                grid[x, y, z] = value;
+            }
+            else
+            {
+                throw new System.IndexOutOfRangeException("Index was outside the bounds of the array.");
+            }
         }
     }
 
@@ -39,11 +52,22 @@ public class Grid3D
     {
         get
         {
-            return grid[x, y, z];
+            if (x >= 0 && x < Width && y >= 0 && y < Height && z >= 0 && z < Depth)
+            {
+                return grid[x, y, z];
+            }
+            throw new System.IndexOutOfRangeException("Index was outside the bounds of the array.");
         }
         set
         {
-            grid[x, y, z] = value;
+            if (x >= 0 && x < Width && y >= 0 && y < Height && z >= 0 && z < Depth)
+            {
+                grid[x, y, z] = value;
+            }
+            else
+            {
+                throw new System.IndexOutOfRangeException("Index was outside the bounds of the array.");
+            }
         }
     }
 
@@ -76,4 +100,48 @@ public class Grid3D
             }
         }
     }
+
+    public List<Vector3> FindCellsWithValue(int value)
+    {
+        List<Vector3> cells = new List<Vector3>();
+
+        for (int x = 0; x < Width; x++)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                for (int z = 0; z < Depth; z++)
+                {
+                    if (grid[x, y, z] == value)
+                    {
+                        cells.Add(new Vector3(x, y, z));
+                    }
+                }
+            }
+        }
+
+        return cells;
+    }
+
+    public List<Vector3> PickRandomCells(List<Vector3> cells, int count)
+    {
+        List<Vector3> pickedCells = new List<Vector3>();
+
+        if (cells.Count < count)
+        {
+            Debug.LogWarning("Not enough cells to pick the requested number of random cells.");
+            return cells;
+        }
+
+        while (pickedCells.Count < count)
+        {
+            int index = Random.Range(0, cells.Count);
+            if (!pickedCells.Contains(cells[index]))
+            {
+                pickedCells.Add(cells[index]);
+            }
+        }
+
+        return pickedCells;
+    }
+
 }
