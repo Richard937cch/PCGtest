@@ -63,10 +63,11 @@ public class EnemySpawn : MonoBehaviour
         //Vector3 spawnPosition = player.transform.position + randomOffset;
         Vector3 spawnPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
 
-
+        spawnPosition+=randomOffset;
+        spawnPosition.z = 0.2f;
 
         // Instantiate the enemy at the calculated position
-        Instantiate(enemyPrefab, spawnPosition+randomOffset, Quaternion.identity);
+        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
 
         Debug.Log("Spawned enemy at: " + spawnPosition);
     }

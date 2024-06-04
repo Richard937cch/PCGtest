@@ -9,9 +9,20 @@ public class NPBehaveExampleEnemyAI : MonoBehaviour
     public float duration = 10f; // Time interval between spawns
     private float timer;
 
+    private float timer2;
+    private float jumptime = 2f;
+
+    public float jumpHeight = 8.0F;
+
+	private bool isFalling = false;
+
+	private Rigidbody rigid;
+
     void Start()
     {
+        rigid = GetComponent<Rigidbody> ();
         timer = duration;
+        timer2 = jumptime;
         // create our behaviour tree and get it's blackboard
         behaviorTree = CreateBehaviourTree();
         blackboard = behaviorTree.Blackboard;
@@ -29,6 +40,7 @@ public class NPBehaveExampleEnemyAI : MonoBehaviour
     void Update()
     {
         timer -= Time.deltaTime;
+        timer2 -= Time.deltaTime;
         
         if (timer <= 0.0f)
         {
@@ -36,6 +48,18 @@ public class NPBehaveExampleEnemyAI : MonoBehaviour
             Destroy(gameObject);
             timer = duration; // Reset the timer
         }
+
+        if (timer2 <= 0.0f)
+        {
+           if ( !isFalling) {
+				//Jump
+				rigid.AddForce (Vector3.up * jumpHeight, ForceMode.Impulse);
+			}
+           timer2 = jumptime; // Reset the timer
+        }
+
+        
+
     }
 
     private Root CreateBehaviourTree()
@@ -100,4 +124,12 @@ public class NPBehaveExampleEnemyAI : MonoBehaviour
     {
         GetComponent<MeshRenderer>().material.SetColor("_Color", color);
     }
+
+    public void OnCollisionStay (Collision col) { //Takes parameter of Collision so unity doesn't complain
+		isFalling = false;
+	}
+
+	public void OnCollisionExit() {
+		isFalling = true;
+	}
 }

@@ -32,7 +32,7 @@ public class Gridgen : MonoBehaviour
     {
         Random.InitState(Seed);
         //spawnpoint = new Vector3(width/2, 0.58f, height/2);
-        spawnpoint = new Vector3(0, 65, -0.58f);
+        spawnpoint = new Vector3(0, 40, -0.58f);
         //Adventurer.transform.position = spawnpoint;
         //Enemy.transform.position = new Vector3(width/2 + 2.0f, 0.5f, height/2);
         GameObject adventurer = Instantiate(Adventurer, spawnpoint, Quaternion.identity);
