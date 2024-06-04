@@ -33,7 +33,7 @@ public class Controller : MonoBehaviour
     private void Update()
     {
         Movement();
-        Rotation();
+        //Rotation();
     }
 
     void Movement()

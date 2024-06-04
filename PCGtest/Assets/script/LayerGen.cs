@@ -113,9 +113,9 @@ public class LayerGen : MonoBehaviour
             //Grid[cell] = 7;
         }
 
-        List<Vector3> cellsWithValue8 = Grid.FindCellsWithValue(8);
-        List<Vector3> randomCells8 = Grid.PickRandomCells(cellsWithValue5, 5);
-        foreach (Vector3 cell in randomCells)
+        List<Vector3> cellsWithValue8 = Grid.FindCellsWithValue(7);
+        List<Vector3> randomCells8 = Grid.PickRandomCells(cellsWithValue8, 5);
+        foreach (Vector3 cell in randomCells8)
         {
             
             Grid[cell] = 8;
@@ -131,12 +131,12 @@ public class LayerGen : MonoBehaviour
             {
                 for (int y = 0; y < depth; y++)
                 {
-                    if (Grid[x,y,z]!=0 && Grid[x,y,z]!=7)
+                    if (Grid[x,y,z]!=0 && Grid[x,y,z]!=7 && Grid[x,y,z]!=8)
                     {
                         GameObject newhallway = Instantiate(hallway, new Vector3(x, y, z), rotation);
                         newhallway.transform.parent = transform;
                     }
-                    if (Grid[x,y,z]==7)
+                    if (Grid[x,y,z]==7 || Grid[x,y,z]==8)
                     {
                         GameObject newroom = Instantiate(roomTile, new Vector3(x, y, z), rotation);
                         newroom.transform.parent = transform;
