@@ -9,10 +9,10 @@ public class RollJump : MonoBehaviour {
 
 	private bool isFalling = false;
 
-	private Rigidbody rigid;
+	private Rigidbody2D rigid;
 
 	void Start () {
-		rigid = GetComponent<Rigidbody> ();
+		rigid = GetComponent<Rigidbody2D> ();
 	}
 		
 	void Update () {
@@ -31,8 +31,9 @@ public class RollJump : MonoBehaviour {
 		}*/
         if (UpKey() && !isFalling) {
 				//Jump
-				rigid.AddForce (Vector3.up * jumpHeight, ForceMode.Impulse);
+				rigid.AddForce (Vector3.up * jumpHeight, (ForceMode2D)ForceMode.Impulse);
 			}
+
 
 	}
 
